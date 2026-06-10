@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AgroVision IA | Agrinho 2026</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Favicon em SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%230a8f4d'/%3E%3Cpath d='M50 25 L65 50 L50 75 L35 50 Z' fill='white'/%3E%3C/svg%3E">
+
+    <!-- Fonte -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Ícones -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <h2>AgroVision IA</h2>
+    </div>
+
+    <!-- BOTÕES ACESSIBILIDADE -->
+    <div class="accessibility-panel">
+        <button onclick="increaseFont()"><i class="fas fa-search-plus"></i></button>
+        <button onclick="decreaseFont()"><i class="fas fa-search-minus"></i></button>
+        <button onclick="toggleContrast()"><i class="fas fa-adjust"></i></button>
+        <button onclick="toggleDyslexia()"><i class="fas fa-book-open"></i></button>
+        <button onclick="speakPage()"><i class="fas fa-volume-up"></i></button>
+        <button onclick="toggleDarkMode()"><i class="fas fa-moon"></i></button>
+    </div>
+
+    <!-- HEADER COM LOGO CORRIGIDA -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-seedling"></i>
+            </div>
+            <div class="logo-text">
+                <h1>AgroVision <span class="ia-badge">IA</span></h1>
+                <p>Sustentabilidade no Campo</p>
+            </div>
+        </div>
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#monitoramento">Monitoramento</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#simulador">Simulador</a>
+            <a href="#chatbot">IA</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <span class="badge">🛰️ Tecnologia Inteligente para o Campo</span>
+            <h1>Tecnologia e sustentabilidade caminhando juntas no campo.</h1>
+            <p>Monitore desperdícios, analise dados ambientais, receba alertas inteligentes e ajude a construir um futuro mais sustentável para o agronegócio.</p>
+            <button class="primary-btn" onclick="document.getElementById('monitoramento').scrollIntoView({behavior: 'smooth'})">Iniciar Monitoramento</button>
+        </div>
+        <div class="hero-image">
+            <i class="fas fa-seedling hero-icon"></i>
+        </div>
+    </section>
+
+    <!-- CARDS -->
+    <section class="features">
+        <div class="card">
+            <i class="fas fa-droplet"></i>
+            <h3>Economia de Água</h3>
+            <p>Monitoramento inteligente do consumo hídrico.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-leaf"></i>
+            <h3>Sustentabilidade</h3>
+            <p>Boas práticas ambientais para o campo.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-robot"></i>
+            <h3>IA Integrada</h3>
+            <p>Análises e recomendações automáticas.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Indicadores</h3>
+            <p>Gráficos em tempo real para tomada de decisão.</p>
+        </div>
+    </section>
+
+    <!-- MONITORAMENTO -->
+    <section id="monitoramento" class="monitoramento">
+        <h2>Sistema Inteligente de Monitoramento</h2>
+        <div class="form-grid">
+            <input type="number" id="agua" placeholder="Quantidade de água (L)">
+            <input type="number" id="temperatura" placeholder="Temperatura (°C)">
+            <input type="number" id="umidade" placeholder="Umidade (%)">
+            <input type="number" id="plantacao" placeholder="Tamanho da plantação (m²)">
+            <input type="number" id="chuva" placeholder="Quantidade de chuva (mm)">
+        </div>
+        <button onclick="analisarDados()">Analisar Dados</button>
+        <div id="resultado"></div>
+    </section>
+
+    <!-- DASHBOARD COM GRÁFICO -->
+    <section id="dashboard" class="dashboard">
+        <h2>Dashboard Inteligente</h2>
+        <div class="dashboard-cards">
+            <div class="dash-card">
+                <h3>💧 Consumo de Água</h3>
+                <span id="aguaIndicador">0%</span>
+            </div>
+            <div class="dash-card">
+                <h3>🌱 Sustentabilidade</h3>
+                <span id="sustentabilidadeIndicador">0%</span>
+            </div>
+            <div class="dash-card">
+                <h3>⚠️ Risco Ambiental</h3>
+                <span id="riscoIndicador">0%</span>
+            </div>
+            <div class="dash-card">
+                <h3>💰 Economia Gerada</h3>
+                <span id="economiaIndicador">R$ 0</span>
+            </div>
+        </div>
+
+        <!-- GRÁFICO INTERATIVO -->
+        <div class="chart-container">
+            <canvas id="graficoAgro"></canvas>
+        </div>
+
+        <!-- Controles do gráfico -->
+        <div class="grafico-controles">
+            <button class="period-btn ativo" onclick="alterarPeriodo('semana')">📅 Semana</button>
+            <button class="period-btn" onclick="alterarPeriodo('mes')">📆 Mês</button>
+            <button class="period-btn" onclick="alterarPeriodo('ano')">📊 Ano</button>
+            <button class="export-btn" onclick="exportarGrafico()"><i class="fas fa-download"></i> Exportar</button>
+        </div>
+    </section>
+
+    <!-- SIMULADOR -->
+    <section id="simulador" class="simulador">
+        <h2>Simulador Climático</h2>
+        <div class="sim-grid">
+            <label>🌧️ Chuva <input type="range" min="0" max="100" id="simChuva"></label>
+            <label>🔥 Calor <input type="range" min="0" max="50" id="simCalor"></label>
+            <label>💧 Umidade <input type="range" min="0" max="100" id="simUmidade"></label>
+        </div>
+        <button onclick="simularClima()">Simular Impacto</button>
+        <div id="resultadoSimulador"></div>
+    </section>
+
+    <!-- PONTUAÇÃO -->
+    <section class="eco-score">
+        <h2>🏆 Pontuação Ecológica</h2>
+        <div class="score-box">
+            <span id="ecoPoints">0</span>
+            <p>Pontos Sustentáveis</p>
+        </div>
+    </section>
+
+    <!-- CHATBOT -->
+    <section id="chatbot" class="chatbot">
+        <h2>🤖 AgroVision IA Assistente</h2>
+        <div class="chat-window" id="chatWindow">
+            <div class="bot-message">🌿 Olá! Sou a IA sustentável do AgroVision. Como posso ajudar?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Digite sua pergunta...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <h3>AgroVision IA</h3>
+        <p>Projeto desenvolvido para o Agrinho 2026 - Categoria Programação.</p>
+        <p>Sustentabilidade • Tecnologia • Futuro</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
